@@ -17,10 +17,6 @@
  - 学会使用 qemu
  - 在linux系统中，看看 /proc/cpuinfo的内容
 
-## 课堂实践
-
-在ucore中写一个函数print_stackframe()，用于获取当前位置的函数调用栈信息。实现如下一种或多种功能：函数入口地址、函数名信息、参数调用参数信息、返回值信息。
-
 ## 思考题
 
 ### 启动顺序
@@ -80,12 +76,22 @@ read_eip相对复杂，代码量较大，若内联则会导致篇幅过长。
 ```
 在trap_patch函数分派到相应位置后在该处添加printf。
 ```
+2. 在lab1/bin目录下，通过`objcopy -O binary kernel kernel.bin`可以把elf格式的ucore kernel转变成体积更小巧的binary格式的ucore kernel。为此，需要如何修改lab1的bootloader, 能够实现正确加载binary格式的ucore OS？ (hard)
+3. GRUB是一个通用的bootloader，被用于加载多种操作系统。如果放弃lab1的bootloader，采用GRUB来加载ucore OS，请问需要如何修改lab1, 能够实现此需求？ (hard)
+4. 如果没有中断，操作系统设计会有哪些问题或困难？在这种情况下，能否完成对外设驱动和对进程的切换等操作系统核心功能？
 
-- 在lab1/bin目录下，通过`objcopy -O binary kernel kernel.bin`可以把elf格式的ucore kernel转变成体积更小巧的binary格式的ucore kernel。为此，需要如何修改lab1的bootloader, 能够实现正确加载binary格式的ucore OS？ (hard)
-
-- GRUB是一个通用的bootloader，被用于加载多种操作系统。如果放弃lab1的bootloader，采用GRUB来加载ucore OS，请问需要如何修改lab1, 能够实现此需求？ (hard)
+## 课堂实践
+### 练习一
+在Linux系统的应用程序中写一个函数print_stackframe()，用于获取当前位置的函数调用栈信息。实现如下一种或多种功能：函数入口地址、函数名信息、参数调用参数信息、返回值信息。
 
 - 如果没有中断，操作系统设计会有哪些问题或困难？在这种情况下，能否完成对外设驱动和对进程的切换等操作系统核心功能？
 ```
 若无中断，只能通过轮询的方法完成上述功能，虽然也能完成，但会占用大量CPU资源，很浪费。
+```
+
+### 练习二
+在ucore内核中写一个函数print_stackframe()，用于获取当前位置的函数调用栈信息。实现如下一种或多种功能：函数入口地址、函数名信息、参数调用参数信息、返回值信息。
+```
+（基本思路）
+利用当前ebp寻找old ebp、return address、函数名、参数等信息；输出eax获得返回值信息。
 ```
