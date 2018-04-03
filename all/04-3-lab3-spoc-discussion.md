@@ -122,6 +122,7 @@ swap分区初始化
  * struct Page
  * struct mm_struct
  * struct vma_struct
+ * struct swap_entry
 
 ## v9-cpu相关
 ---
